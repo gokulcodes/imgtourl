@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImagetoURL | Gokulcodes</title>
+    <link rel='stylesheet' href='css/stylize.css' />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+</head>
+<body>
+    <div class="center">
+        <form action="#">
+            <div class="card animated fadeIn bounce">
+                <h1><b>Gokul Codes</b></h1>
+                <br>
+            <div class="file-field input-field">
+                <div class="btn">
+                  <span>Image</span>
+                  <input type="file" onchange=urlGen(this) name='uploading'>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div><br>
+            <input type='text' name='url' id="url" readonly><br><br>
+            <button id="btn" class="bg-transparent hover:bg-purple-500 text-purple-700 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded" data-clipboard-action="copy" data-clipboard-target="#url" onclick=alerts()>
+                Copy
+            </button>
+        </div>
+        </form>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+    <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        new ClipboardJS('#btn');
+        function urlGen(file){
+            const data = new FormData()
+                data.append('file', file.files[0])
+                data.append('upload_preset', 'nextCarter')
+                data.append('cloud_name', 'dqwdpd8yh')
+            axios.post('https://api.cloudinary.com/v1_1/dqwdpd8yh/image/upload', data)
+                .then(response => {
+                    $('#url').val(response.data.url)
+                })
+                .catch(error => console.error(error));
+        }
+        function alerts(){
+            swal("Hurei!",  "Link Copied", "success");
+        }
+    </script>
+</body>
+</html>
